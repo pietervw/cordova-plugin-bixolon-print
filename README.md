@@ -104,13 +104,13 @@ cordova.plugins.bixolonPrint.printText(successCallback, errorCallback, config Ob
 Example of config object:
 ```javascript
   var printImage = {
-      alignment: 2, // Left = 0; Center = 1; Right = 2
+      alignment: 0, // Left = 0; Center = 1; Right = 2
       width: 500,
       height: 200,
-      level: 88,
+      level: 88, // 13 - 88
       dither: true,
       compress: true,
-      pathName: base64Img
+      pathName: base64Img // base64 string
   }
 ```
 
