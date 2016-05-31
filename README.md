@@ -100,6 +100,24 @@ cordova.plugins.bixolonPrint.addHr(separator String);
 cordova.plugins.bixolonPrint.printText(successCallback, errorCallback, config Object);
 ```
 
+### Print images
+Example of config object:
+```javascript
+  var printImage = {
+      alignment: 2, // Left = 0; Center = 1; Right = 2
+      width: 500,
+      height: 200,
+      level: 88,
+      dither: true,
+      compress: true,
+      pathName: base64Img
+  }
+```
+
+```javascript
+cordova.plugins.bixolonPrint.printBitmap(successCallback, errorCallback, config Object);
+```
+
 ### Cut paper
 
 ```javascript
