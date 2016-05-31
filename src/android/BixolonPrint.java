@@ -31,6 +31,10 @@ import java.util.Map;
 import java.util.HashMap;
 //import java.util.Queue;
 import java.util.Set;
+import java.io.*;
+
+import android.graphics.BitmapFactory;
+import android.graphics.Bitmap;
 
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
@@ -51,6 +55,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
+import android.util.Base64;
 
 public class BixolonPrint extends CordovaPlugin {
 
@@ -58,6 +63,7 @@ public class BixolonPrint extends CordovaPlugin {
 
     // Action to execute
     public static final String ACTION_PRINT_TEXT = "printText";
+    public static final String ACTION_PRINT_BITMAP = "printBitmap";
     public static final String ACTION_GET_STATUS = "getStatus";
     public static final String ACTION_CUT_PAPER = "cutPaper";
 
@@ -186,7 +192,11 @@ public class BixolonPrint extends CordovaPlugin {
             JSONObject printConfig = args.optJSONObject(1);
             this.optAutoConnect = printConfig.optBoolean("autoConnect");
             this.optToastMessage = printConfig.optBoolean("toastMessage");
-        } else if (ACTION_CUT_PAPER.equals(action)) {
+        }  else if (ACTION_PRINT_BITMAP.equals(action)) {
+            JSONObject printConfig = args.optJSONObject(1);
+            this.optAutoConnect = printConfig.optBoolean("autoConnect");
+            this.optToastMessage = printConfig.optBoolean("toastMessage");
+        }else if (ACTION_CUT_PAPER.equals(action)) {
             JSONObject printConfig = args.optJSONObject(0);
             this.optAutoConnect = printConfig.optBoolean("autoConnect");
             this.optToastMessage = printConfig.optBoolean("toastMessage");
@@ -234,6 +244,8 @@ public class BixolonPrint extends CordovaPlugin {
 
         if (ACTION_PRINT_TEXT.equals(this.lastActionName)) {
             this.printText();
+        } else if (ACTION_PRINT_BITMAP.equals(this.lastActionName)) {
+            this.printBitmap();
         } else if (ACTION_CUT_PAPER.equals(this.lastActionName)) {
             this.cutPaper();
         } else if (ACTION_GET_STATUS.equals(this.lastActionName)) {
@@ -386,6 +398,106 @@ public class BixolonPrint extends CordovaPlugin {
 
         Log.d(TAG, "BixolonPrint.printText_END");
     }
+    
+      public static Bitmap decodeBase64(String input)
+{
+    byte[] decodedBytes = Base64.decode(input, 0);
+    return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+}
+     
+     
+    private void printBitmap() {
+        Log.d(TAG, "BixolonPrint.printBitmap_START");
+
+        String hrBCode = "[hr]";
+        int paperWidth = 0;
+
+        String pathName;
+        JSONObject printConfig;
+        boolean formFeed;
+        int lineFeed;
+        int codePage;
+        int alignment;
+        int width;
+        int level;
+        boolean dither;
+        boolean compress;        
+
+        try {
+            pathName = this.lastActionArgs.getString(0);
+            Log.d(TAG, "BixolonPrint.printMobile: image:" + pathName);
+            printConfig = this.lastActionArgs.getJSONObject(1);
+            formFeed = printConfig.getBoolean("formFeed");
+            lineFeed = printConfig.getInt("lineFeed");
+            codePage = printConfig.getInt("codePage");
+            alignment = printConfig.getInt("alignment");
+            width = printConfig.getInt("width");
+            level = printConfig.getInt("level");
+            dither = printConfig.getBoolean("dither");
+            compress = printConfig.getBoolean("compress");
+        } catch (JSONException e1) {
+            this.isValidAction = false;
+            this.actionError = "print error: " + e1.getMessage();
+            this.disconnect();
+            return;
+        }
+
+        String align;
+        String fontType;
+        String fontStyle;
+        int height;
+
+        int textAlignment;
+        int textAttribute;
+        int textSize;
+
+        if (MAX_COL.containsKey(this.mConnectedDeviceName)) {
+            paperWidth = MAX_COL.get(this.mConnectedDeviceName);
+        }
+
+        mBixolonPrinter.setSingleByteFont(codePage);
+
+        JSONObject textLine;
+       // int arlength = pathName.length();
+
+           try {
+                Bitmap bitMap = decodeBase64(pathName);
+            
+                Log.d(TAG, "BixolonPrint.printMobile: image:");
+           
+                width = printConfig.optInt("textWidth");
+                height = printConfig.optInt("textHeight");
+                alignment = printConfig.getInt("alignment");
+                width = printConfig.getInt("width");
+                height = printConfig.getInt("height");
+                level = printConfig.getInt("level");
+                dither = printConfig.getBoolean("dither");
+                compress = printConfig.getBoolean("compress");
+                Log.d(TAG, "BixolonPrint.printMobile: image: 2" + pathName);
+                
+                mBixolonPrinter.printBitmap(bitMap, alignment, width, level, dither, compress, true);
+
+            } catch (JSONException e2) {
+                this.isValidAction = false;
+                this.actionError = "print error: " + e2.getMessage();
+                this.disconnect();
+                return;
+            }
+
+        if (formFeed) {
+            mBixolonPrinter.formFeed(false);
+        } else {
+            mBixolonPrinter.lineFeed(lineFeed, false);
+        }
+
+        mBixolonPrinter.cutPaper(true);
+        mBixolonPrinter.kickOutDrawer(BixolonPrinter.DRAWER_CONNECTOR_PIN5);
+
+        this.actionSuccess = "print success";
+        //this.disconnect();
+
+        Log.d(TAG, "BixolonPrint.printBitmap_END");
+    }
 
     private void cutPaper() {
         Log.d(TAG, "BixolonPrint.cutPaper_START");
@@ -519,7 +631,8 @@ public class BixolonPrint extends CordovaPlugin {
 
         Log.d(TAG, "BixolonPrint.getStatus_END");
     }
-
+    
+   
     private void onMessageRead(Message msg) {
         Log.d(TAG, "BixolonPrint.onMessageRead_START: " + msg.arg1);
 
