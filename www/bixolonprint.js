@@ -68,9 +68,9 @@ var BixolonPrintLoader = function (require, exports, module) {
          * @type {{LEFT: string, CENTER: string, RIGHT: string}}
          */
         this.TextAlign = {
-            LEFT   : 'left',
-            CENTER : 'center',
-            RIGHT  : 'right'
+            LEFT: 'left',
+            CENTER: 'center',
+            RIGHT: 'right'
         };
 
         /**
@@ -88,11 +88,11 @@ var BixolonPrintLoader = function (require, exports, module) {
          * @type {{DEFAULT: string, BOLD: string, UNDERLINE: string, UNDERLINE2: string, REVERSE: string}}
          */
         this.FontStyle = {
-            DEFAULT    : 'default',
-            BOLD       : 'bold',
-            UNDERLINE  : 'underline',
-            UNDERLINE2 : 'underline2',
-            REVERSE    : 'reversed'
+            DEFAULT: 'default',
+            BOLD: 'bold',
+            UNDERLINE: 'underline',
+            UNDERLINE2: 'underline2',
+            REVERSE: 'reversed'
         };
 
         /**
@@ -115,38 +115,38 @@ var BixolonPrintLoader = function (require, exports, module) {
          * @type {{CP_437_USA: number, CP_KATAKANA: number, CP_850_MULTILINGUAL: number, CP_860_PORTUGUESE: number, CP_863_CANADIAN_FRENCH: number, CP_865_NORDIC: number, CP_1252_LATIN1: number, CP_866_CYRILLIC2: number, CP_852_LATIN2: number, CP_858_EURO: number, CP_862_HEBREW_DOS_CODE: number, CP_864_ARABIC: number, CP_THAI42: number, CP_1253_GREEK: number, CP_1254_TURKISH: number, CP_1257_BALTIC: number, CP_FARSI: number, CP_1251_CYRILLIC: number, CP_737_GREEK: number, CP_775_BALTIC: number, CP_THAI14: number, CP_1255_HEBREW_NEW_CODE: number, CP_THAI11: number, CP_THAI18: number, CP_855_CYRILLIC: number, CP_857_TURKISH: number, CP_928_GREEK: number, CP_THAI16: number, CP_1256_ARABIC: number, CP_1258_VIETNAM: number, CP_KHMER_CAMBODIA: number, CP_1250_CZECH: number}}
          */
         this.CodePage = {
-            CP_437_USA               : 0,
-            CP_KATAKANA              : 1,
-            CP_850_MULTILINGUAL      : 2,
-            CP_860_PORTUGUESE        : 3,
-            CP_863_CANADIAN_FRENCH   : 4,
-            CP_865_NORDIC            : 5,
-            CP_1252_LATIN1           : 16,
-            CP_866_CYRILLIC2         : 17,
-            CP_852_LATIN2            : 18,
-            CP_858_EURO              : 19,
-            CP_862_HEBREW_DOS_CODE   : 21,
-            CP_864_ARABIC            : 22,
-            CP_THAI42                : 23,
-            CP_1253_GREEK            : 24,
-            CP_1254_TURKISH          : 25,
-            CP_1257_BALTIC           : 26,
-            CP_FARSI                 : 27,
-            CP_1251_CYRILLIC         : 28,
-            CP_737_GREEK             : 29,
-            CP_775_BALTIC            : 30,
-            CP_THAI14                : 31,
-            CP_1255_HEBREW_NEW_CODE  : 33,
-            CP_THAI11                : 34,
-            CP_THAI18                : 35,
-            CP_855_CYRILLIC          : 36,
-            CP_857_TURKISH           : 37,
-            CP_928_GREEK             : 38,
-            CP_THAI16                : 39,
-            CP_1256_ARABIC           : 40,
-            CP_1258_VIETNAM          : 41,
-            CP_KHMER_CAMBODIA        : 42,
-            CP_1250_CZECH            : 43
+            CP_437_USA: 0,
+            CP_KATAKANA: 1,
+            CP_850_MULTILINGUAL: 2,
+            CP_860_PORTUGUESE: 3,
+            CP_863_CANADIAN_FRENCH: 4,
+            CP_865_NORDIC: 5,
+            CP_1252_LATIN1: 16,
+            CP_866_CYRILLIC2: 17,
+            CP_852_LATIN2: 18,
+            CP_858_EURO: 19,
+            CP_862_HEBREW_DOS_CODE: 21,
+            CP_864_ARABIC: 22,
+            CP_THAI42: 23,
+            CP_1253_GREEK: 24,
+            CP_1254_TURKISH: 25,
+            CP_1257_BALTIC: 26,
+            CP_FARSI: 27,
+            CP_1251_CYRILLIC: 28,
+            CP_737_GREEK: 29,
+            CP_775_BALTIC: 30,
+            CP_THAI14: 31,
+            CP_1255_HEBREW_NEW_CODE: 33,
+            CP_THAI11: 34,
+            CP_THAI18: 35,
+            CP_855_CYRILLIC: 36,
+            CP_857_TURKISH: 37,
+            CP_928_GREEK: 38,
+            CP_THAI16: 39,
+            CP_1256_ARABIC: 40,
+            CP_1258_VIETNAM: 41,
+            CP_KHMER_CAMBODIA: 42,
+            CP_1250_CZECH: 43
         };
     };
 
@@ -180,7 +180,7 @@ var BixolonPrintLoader = function (require, exports, module) {
 
         if ((typeof separator == 'string' || separator instanceof String) && separator.length == 1) {
             sp = separator;
-        } else if(!!separator) {
+        } else if (!!separator) {
             throw new Error("BixolonPrint.addHr failure: separator must be a string!");
         }
 
@@ -194,12 +194,12 @@ var BixolonPrintLoader = function (require, exports, module) {
     BixolonPrint.prototype.addLine = function (obj) {
 
         var rObj = {
-            text       : '',
-            textAlign  : this.TextAlign.LEFT,
-            textWidth  : this.TextDimension.TD_0,
-            textHeight : this.TextDimension.TD_0,
-            fontType   : this.FontType.A,
-            fontStyle  : this.FontStyle.DEFAULT
+            text: '',
+            textAlign: this.TextAlign.LEFT,
+            textWidth: this.TextDimension.TD_0,
+            textHeight: this.TextDimension.TD_0,
+            fontType: this.FontType.A,
+            fontStyle: this.FontStyle.DEFAULT
         };
 
         if (typeof obj == 'string' || obj instanceof String) {
@@ -267,15 +267,15 @@ var BixolonPrintLoader = function (require, exports, module) {
         this.textLines = [];
         config = config || {};
 
-        if(!this._isObject(config)) {
+        if (!this._isObject(config)) {
             throw new Error("BixolonPrint.printText failure: config parameter must be a object!");
         }
 
-        if(config.lineFeed && parseInt(config.lineFeed) === config.lineFeed && config.lineFeed > 0) {
+        if (config.lineFeed && parseInt(config.lineFeed) === config.lineFeed && config.lineFeed > 0) {
             printConfig.lineFeed = config.lineFeed
         }
 
-        if(config.formFeed === false || config.formFeed === true) {
+        if (config.formFeed === false || config.formFeed === true) {
             printConfig.formFeed = config.formFeed;
         }
 
@@ -291,6 +291,76 @@ var BixolonPrintLoader = function (require, exports, module) {
             [textLines, printConfig]
         );
     };
+
+    BixolonPrint.prototype.printBitmap = function (successCallback, errorCallback, config) {
+
+        if (!this._isFunction(successCallback)) {
+            successCallback = function (response) {
+                console.log('BixolonPrint.printBitmap success: ' + response);
+            };
+        }
+
+        if (!this._isFunction(errorCallback)) {
+            errorCallback = function (error) {
+                console.warn('BixolonPrint.printBitmap failure: ' + error);
+            };
+        }
+
+        var printConfig = this.settings,
+            pathName = config.pathName;
+            pathName = pathName.replace('data:image/png;base64,', '').replace('data:image/jpg;base64,', '').replace('data:image/jpeg;base64,', '');
+
+        config = config || {};
+
+        if (!this._isObject(config)) {
+            throw new Error("BixolonPrint.printBitmap failure: config parameter must be a object!");
+        }
+
+        if (config.lineFeed && parseInt(config.lineFeed) === config.lineFeed && config.lineFeed > 0) {
+            printConfig.lineFeed = config.lineFeed;
+        }
+
+        if (config.formFeed === false || config.formFeed === true) {
+            printConfig.formFeed = config.formFeed;
+        }
+
+        if (config.codePage && parseInt(config.codePage) >= 0) {
+            printConfig.codePage = config.codePage;
+        }
+
+        if (config.alignment && (parseInt(config.alignment) >= 0 && parseInt(config.alignment) <= 3)) {
+            printConfig.alignment = config.alignment;
+        }
+
+        if (config.width && parseInt(config.width) >= 1) {
+            printConfig.width = config.width;
+        }
+
+        if (config.height && parseInt(config.height) >= 1) {
+            printConfig.height = config.height;
+        }
+
+        if (config.level && (parseInt(config.level) >= 13 && parseInt(config.level) <= 88)) {
+            printConfig.level = config.level;
+        }     
+
+        if (config.dither == true || config.dither == false) {
+            printConfig.dither = config.dither;
+        }
+
+        if (config.compress == true || config.compress == false) {
+            printConfig.compress = config.compress;
+        }
+        
+        exec(
+            successCallback,
+            errorCallback,
+            "BixolonPrint",
+            "printBitmap",
+            [pathName, printConfig]
+        );
+    };
+
 
     /**
      *
@@ -357,7 +427,7 @@ var BixolonPrintLoader = function (require, exports, module) {
             };
         }
 
-        if(!printStatus) printStatus = false;
+        if (!printStatus) printStatus = false;
 
         if (!(printStatus === true || printStatus === false)) {
             throw new Error("BixolonPrint.getStatus failure: printStatus parameter must be a bool!");
@@ -382,4 +452,4 @@ var BixolonPrintLoader = function (require, exports, module) {
 };
 
 BixolonPrintLoader(require, exports, module);
-cordova.define("cordova/plugins/BixolonPrint", BixolonPrintLoader );
+cordova.define("cordova/plugins/BixolonPrint", BixolonPrintLoader);
