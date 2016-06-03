@@ -328,7 +328,7 @@ var BixolonPrintLoader = function (require, exports, module) {
             printConfig.codePage = config.codePage;
         }
 
-        if (config.alignment && (parseInt(config.alignment) >= 0 && parseInt(config.alignment) <= 3)) {
+        if (config.alignment && (parseInt(config.alignment) >= 0 && parseInt(config.alignment) <= 3) || config.alignment === 0) {
             printConfig.alignment = config.alignment;
         }
 
